@@ -4,4 +4,4 @@ Homepage for Xeno!
 
 Post feature requests, bug reports here.
 
-go to /releases for release info
+go to the [releases page](/releases "Xeno Releases") to see Xeno's version history and changelog
