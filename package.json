@@ -1,0 +1,26 @@
+{
+  "name": "xeno",
+  "version": "14.0.0",
+  "description": "Turn your Discord server up to 11",
+  "main": "index.js",
+  "dependencies": {
+    "@discordjs/opus": "^0.3.2",
+    "bufferutil": "^4.0.1",
+    "discord.js-light": "^2.7.2",
+    "dotenv": "^8.2.0",
+    "erlpack": "github:discordapp/erlpack",
+    "moment": "^2.26.0",
+    "ms": "^2.1.2",
+    "pretty-ms": "^7.0.0",
+    "quick.db": "^7.1.1",
+    "sanic.js": "^1.1.2",
+    "scrape-youtube": "^0.2.0",
+    "sodium-native": "^3.1.1",
+    "tiny-glob": "^0.2.6",
+    "utf-8-validate": "^5.0.2",
+    "ytdl-core": "3.1.1",
+    "zlib-sync": "^0.1.6"
+  },
+  "author": "Emortal",
+  "license": "ISC"
+}
