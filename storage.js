@@ -8,7 +8,6 @@ module.exports = {
     commands,
     aliases,
     queue,
-
     loadCommands: async () => {
         const fileSlash = process.platform == "win32" ? "\\" : "/"
         const files = await glob("commands/*/*.js");
@@ -16,7 +15,6 @@ module.exports = {
         files.forEach(async (file) => {
             const command = require(`./${file}`);
             const splitter = file.split(fileSlash);
-
 
             commands.set(splitter[2].slice(0, -3), {
                 command,
