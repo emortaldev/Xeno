@@ -5,12 +5,7 @@ const ytdl = require("ytdl-core")
     , ytdlOpt = { quality: ["95", "93", "258", "256", "22", "140"], highWaterMark: 1 << 24 };
 
 async function play(song, tc, vc, connection) {
-    tc.send({
-        embed: {
-            description: `:notes: **${song.title}** \`${ms(song.length * 1e3)}\``,
-            color: 0x7289DA
-        }
-    });
+    tc.send(`:notes: **${song.title}** \`${ms(song.length * 1e3)}\``);
 
     if (!connection) connection = await vc.join();
 
@@ -33,10 +28,6 @@ async function play(song, tc, vc, connection) {
     });
 }
 
-function filterString(s) {
-    return s.replace("|", "\\|").replace("*", "\\*").replace("_", "\\_").replace("~", "\\~").replace("`", "\\`").replace(">", "\\>");
-}
-
 module.exports.run = async (client, message, args) => {
     if (args.length == 0) return message.channel.send("Please specify a valid YouTube search query, url or ID!");
     if (!message.member.voice.channelID) return message.channel.send("Please join a voice channel!");
@@ -49,15 +40,9 @@ module.exports.run = async (client, message, args) => {
         if (!info) return message.channel.send("No results");
 
         song = {
-            title: filterString(info.videoDetails.title),
+            title: info.videoDetails.title,
             id: info.videoDetails.videoId,
             length: info.videoDetails.lengthSeconds
-        };
-    } else if (url.endsWith(".mp3")) {
-        song = {
-            title: url.replace(".mp3", ""),
-            id: url.startsWith("http") ? url : "/root/stereo/commands/Music/" + url,
-            length: "MP3"
         }
     } else {
         let results = await search(url, { type: "video", limit: 1, useWorkerThread: true });
@@ -65,10 +50,10 @@ module.exports.run = async (client, message, args) => {
         results = results[0];
 
         song = {
-            title: filterString(results.title),
+            title: results.title,
             id: results.id,
             length: results.duration
-        };
+        }
     }
 
     if (!queue.has(message.guild.id)) {
@@ -79,12 +64,7 @@ module.exports.run = async (client, message, args) => {
 
         play(song, message.channel, message.member.voice.channel);
     } else {
-        message.channel.send({
-            embed: {
-                description: `:white_check_mark: **${song.title}** \`${ms(song.length * 1e3)}\``,
-                color: 0x7AFF7A
-            }
-        });
+        message.channel.send(`:white_check_mark: **${song.title}** \`${ms(song.length * 1e3)}\``);
 
         queue.get(message.guild.id).songs.push(song);
     }
