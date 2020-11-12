@@ -1,8 +1,7 @@
 const ytdl = require("ytdl-core")
     , ms = require("../../msparse")
     , { search } = require("scrape-yt")
-    , { queue } = require("../../storage")
-    , ytdlOpt = { quality: ["95", "93", "258", "256", "22", "140"], highWaterMark: 1 << 24 };
+    , { queue } = require("../../storage");
 
 async function play(song, tc, vc, connection) {
     tc.send(`:notes: **${song.title}** \`${ms(song.length * 1e3)}\``);
@@ -14,7 +13,7 @@ async function play(song, tc, vc, connection) {
     });
 
     const serverQueue = queue.get(tc.guild.id);
-    const dispatcher = connection.play(ytdl(song.id, ytdlOpt), { volume: serverQueue.volume / 100, bitrate: 160 });
+    const dispatcher = connection.play(ytdl(song.id, { quality: "highestaudio", highWaterMark: 1 << 24 }), { volume: serverQueue.volume / 100, bitrate: 160 });
 
     serverQueue.dispatcher = dispatcher;
 
