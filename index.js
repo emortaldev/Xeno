@@ -1,7 +1,62 @@
 const { Client } = require("discord.js-light")
-    , { prefix, token, clientOpt } = require("./config.json")
+    , { prefix, token } = require("./config.json")
     , { commands, aliases, loadCommands } = require("./storage")
-    , client = new Client(clientOpt);
+    , client = new Client({
+        clientOpt: {
+        disableMentions: "everyone",
+        cacheGuilds: true,
+        cacheChannels: false,
+        cacheOverwrites: false,
+        cacheRoles: false,
+        cacheEmojis: false,
+        cachePresences: false,
+        ws: { intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES"] },
+        disabledEvents: [
+            "channelCreate",
+            "channelDelete",
+            "channelUpdate",
+            "channelPinsUpdate",
+            "emojiCreate",
+            "emojiDelete",
+            "emojiUpdate",
+            "guildBanAdd",
+            "guildBanRemove",
+            "guildIntegrationsUpdate",
+            "guildUnavailable",
+            "guildUpdate",
+            "guildMemberAdd",
+            "guildMemberRemove",
+            "guildMembersChunk",
+            "guildMemberSpeaking",
+            "guildMemberUpdate",
+            "inviteCreate",
+            "inviteDelete",
+            "messageDelete",
+            "messageUpdate",
+            "messageDeleteBulk",
+            "messageReactionAdd",
+            "messageReactionRemove",
+            "messageReactionRemoveAll",
+            "messageReactionRemoveEmoji",
+            "roleCreate",
+            "roleDelete",
+            "roleUpdate",
+            "shardDisconnect",
+            "shardError",
+            "shardReady",
+            "shardReconnecting",
+            "shardResume",
+            "presenceUpdate",
+            "rateLimit",
+            "typingStart",
+            "userUpdate",
+            "voiceStateUpdate",
+            "warn",
+            "debug",
+            "error",
+            "webhookUpdate"
+        ]
+    });
 
 client.login(token).catch(console.error);
 loadCommands();
