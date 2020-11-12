@@ -2,7 +2,6 @@ const { Client } = require("discord.js-light")
     , { prefix, token } = require("./config.json")
     , { commands, aliases, loadCommands } = require("./storage")
     , client = new Client({
-        clientOpt: {
         disableMentions: "everyone",
         cacheGuilds: true,
         cacheChannels: false,
