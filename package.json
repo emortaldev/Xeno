@@ -2,12 +2,12 @@
     "version": "3.0.0",
     "author": "emortal",
     "dependencies": {
-        "@discordjs/opus": "^0.3.2",
-        "discord.js-light": "^3.2.11",
+        "@discordjs/opus": "^0.3.3",
+        "discord.js-light": "^3.3.5",
         "erlpack": "github:discord/erlpack",
         "scrape-yt": "^1.4.3",
         "tiny-glob": "^0.2.6",
-        "ytdl-core": "^3.3.0",
+        "ytdl-core": "^4.0.3",
         "zlib-sync": "^0.1.7"
     }
 }
