@@ -1,4 +1,4 @@
-const ytdl = require("ytdl-core-discord")
+const ytdl = require("ytdl-core")
     , ms = require("../../msparse")
     , { search } = require("scrape-yt")
     , { queue } = require("../../storage");
