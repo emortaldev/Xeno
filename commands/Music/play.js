@@ -1,10 +1,10 @@
-const ytdl = require("ytdl-core")
+const ytdl = require("ytdl-core-discord")
     , ms = require("../../msparse")
     , { search } = require("scrape-yt")
     , { queue } = require("../../storage");
 
 async function play(song, tc, vc, connection) {
-    tc.send(`:notes: **${song.title}** \`${ms(song.length * 1e3)}\``);
+    tc.send(`:notes: **${song.title}** \`${ms(song.length * 1000)}\``);
 
     if (!connection) connection = await vc.join();
 
@@ -63,8 +63,7 @@ module.exports.run = async (client, message, args) => {
 
         play(song, message.channel, message.member.voice.channel);
     } else {
-        message.channel.send(`:white_check_mark: **${song.title}** \`${ms(song.length * 1e3)}\``);
-
+        message.channel.send(`:white_check_mark: **${song.title}** \`${ms(song.length * 1000)}\``);
         queue.get(message.guild.id).songs.push(song);
     }
 };
