@@ -1,6 +1,6 @@
 const { commands } = require("../../storage");
 
-module.exports.run = async (client, message) => {
+module.exports.run = async (_, message) => {
     let fields = [];
 
     commands.filter((cmd) => cmd.command.config.description != "HIDE").forEach((cmd, cmdname) => {
@@ -11,7 +11,6 @@ module.exports.run = async (client, message) => {
 
     message.channel.send({
         embed: {
-            title: `${client.user.username} Help`,
             fields,
             color: 0x7289DA
         }

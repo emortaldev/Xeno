@@ -1,28 +1,32 @@
-const { Collection } = require("discord.js-light")
-    , glob = require("tiny-glob")
-    , commands = new Collection()
-    , aliases = new Collection()
-    , queue = new Collection();
+const { Collection } = require("discord.js-light");
+const glob = require("tiny-glob");
+const commands = new Collection();
+const queue = new Collection();
+const directorySlash = process.platform == "win32" ? "\\" : "/"
 
 module.exports = {
     commands,
-    aliases,
     queue,
     loadCommands: async () => {
-        const fileSlash = process.platform == "win32" ? "\\" : "/"
         const files = await glob("commands/*/*.js");
 
         files.forEach(async (file) => {
             const command = require(`./${file}`);
-            const splitter = file.split(fileSlash);
+            const splitter = file.split(directorySlash);
 
             commands.set(splitter[2].slice(0, -3), {
                 command,
-                category: splitter[1]
+                category: splitter[1],
             });
-            if (command.config.aliases) command.config.aliases.forEach(a => aliases.set(a, splitter[2].slice(0, -3)));
 
             delete require.cache[require.resolve(`./${file}`)];
         });
     },
+    getCommand: (commandName) => {
+        const cmd = commands.get(commandName);
+        if (cmd != null) return cmd;
+
+        for (const cmd of commands)
+            if (cmd[1].command.config.aliases.includes(commandName)) return cmd[1];
+    }
 };

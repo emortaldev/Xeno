@@ -1,13 +1,13 @@
 const ms = require("../../msparse");
 const { queue } = require("../../storage");
 
-module.exports.run = async (client, message) => {
+module.exports.run = async (_, message) => {
     const serverQueue = queue.get(message.guild.id);
 
     if (!serverQueue || !serverQueue.songs) return message.channel.send("No music is playing!");
 
     const { title, length, id } = serverQueue.songs[0];
-    let description = `Currently playing: [${title}](https://youtu.be/${id}) \`${ms(length * 1e3)}\` ${serverQueue.dispatcher.paused ? " (PAUSED)" : ""}`;
+    let description = `Currently playing: [${title}](https://youtu.be/${id}) \`${ms(length)}\` ${serverQueue.dispatcher.paused ? " (PAUSED)" : ""}`;
 
     message.channel.send({
         embed: {
