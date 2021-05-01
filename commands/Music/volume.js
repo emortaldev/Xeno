@@ -1,4 +1,4 @@
-const { queue } = require("../../storage");
+const { queue } = require("../../util/storage");
 
 module.exports.run = async (_, message, args) => {
     const serverQueue = queue.get(message.guild.id);

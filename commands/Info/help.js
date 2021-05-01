@@ -1,4 +1,4 @@
-const { commands } = require("../../storage");
+const { commands } = require("../../util/storage");
 
 module.exports.run = async (_, message) => {
     let fields = [];

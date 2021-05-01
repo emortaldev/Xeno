@@ -1,6 +1,6 @@
-const { Client } = require("discord.js-light");
+const { Client, version } = require("discord.js-light");
 const { prefix, token } = require("./config.json");
-const { commands, loadCommands, getCommand } = require("./storage");
+const { loadCommands, getCommand } = require("./util/storage");
 const client = new Client({
     disableMentions: "everyone",
     cacheGuilds: true,
@@ -9,7 +9,7 @@ const client = new Client({
     cacheRoles: false,
     cacheEmojis: false,
     cachePresences: false,
-    ws: { intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES"] },
+    intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES"],
     disabledEvents: [
         "channelCreate",
         "channelDelete",
@@ -57,12 +57,14 @@ const client = new Client({
     ]
 });
 
+process.stdout.write(`Discord.JS Version: ${version}\nStereo Version: ${require("./package.json").version}\nStarting...\n\n`)
+
 client.login(token).catch(console.error);
 loadCommands();
 
 client
     .on("ready", async () => {
-        process.stdout.write(`${client.user.username}\n`);
+        process.stdout.write(`Bot is now ready! Logged in as ${client.user.username}\n`);
     })
 
     .on("message", async (msg) => {

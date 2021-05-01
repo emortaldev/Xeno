@@ -1,5 +1,5 @@
-const ms = require("../../msparse");
-const { queue } = require("../../storage");
+const ms = require("../../util/msparse");
+const { queue } = require("../../util/storage");
 
 module.exports.run = async (_, message) => {
     const serverQueue = queue.get(message.guild.id);

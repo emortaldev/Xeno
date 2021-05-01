@@ -1,11 +1,10 @@
 const { Collection } = require("discord.js-light");
 const glob = require("tiny-glob");
 const commands = new Collection();
-const queue = new Collection();
+const queue = new Map();
 const directorySlash = process.platform == "win32" ? "\\" : "/"
 
 module.exports = {
-    commands,
     queue,
     loadCommands: async () => {
         const files = await glob("commands/*/*.js");

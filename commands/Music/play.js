@@ -1,7 +1,9 @@
 const ytdl = require("ytdl-core-discord");
-const ms = require("../../msparse");
-const { search } = require("scrape-yt");
-const { queue } = require("../../storage");
+const ms = require("../../util/msparse");
+const cacheutil = require("../../util/videoutil");
+
+const { queue } = require("../../util/storage");
+
 
 module.exports.run = async (_, message, args) => {
     const serverQueue = queue.get(message.guild.id);
@@ -16,32 +18,7 @@ module.exports.run = async (_, message, args) => {
     if (!message.member.voice.channelID) return message.channel.send("Please join a voice channel!");
 
     const url = args.join(" ");
-    let song = {};
-
-    const loadingMessage = await message.channel.send(`<a:load:811560024769429524> Loading...`);
-    loadingMessage.delete({ timeout: 15000 });
-    message.delete({ timeout: 15000 });
-
-    if (ytdl.validateURL(url) || ytdl.validateID(url)) {
-        const info = await ytdl.getBasicInfo(url).catch(() => { return undefined; });
-        if (!info) return loadingMessage.edit("No results");
-
-        song = {
-            title: info.videoDetails.title,
-            id: info.videoDetails.videoId,
-            length: info.videoDetails.lengthSeconds
-        }
-    } else {
-        let results = await search(url, { type: "video", limit: 1, useWorkerThread: true });
-        if (results.length == 0) return loadingMessage.edit("No results");
-
-        song = {
-            title: results[0].title,
-            id: results[0].id,
-            length: results[0].duration
-        }
-    }
-
+    const song = await cacheutil.getVideo(url);
 
     if (!queue.has(message.guild.id)) {
         queue.set(message.guild.id, {
@@ -49,12 +26,12 @@ module.exports.run = async (_, message, args) => {
             volume: 100
         });
 
-        loadingMessage.edit(`<a:loadfinished:811560317527261204> Now playing: **${song.title}** \`${ms(song.length)}\``);
-
         play(song, message.channel, message.member.voice.channel);
+
+        message.channel.send(`Now playing: **${song.title}** \`${ms(song.length)}\``);
     } else {
         serverQueue.songs.push(song);
-        loadingMessage.edit(`<a:loadfinished:811560317527261204> **${song.title}** has been added to the queue!`);
+        message.channel.send(`**${song.title}** has been added to the queue!`);
     }
         
 };
@@ -67,7 +44,8 @@ async function play(song, tc, vc, connection) {
     });
 
     const serverQueue = queue.get(tc.guild.id);
-    const dispatcher = connection.play(await ytdl(song.id, { quality: "highestaudio", highWaterMark: 1 << 24 }), { type: "opus", volume: serverQueue.volume / 100, bitrate: 192 });
+
+    const dispatcher = connection.play(await ytdl(song.id, { quality: "highestaudio", highWaterMark: 1 << 24 }), { type: "opus", volume: serverQueue.volume / 100, bitrate: 256 });
 
     serverQueue.dispatcher = dispatcher;
 

@@ -1,4 +1,4 @@
-const ms = require("../../msparse");
+const ms = require("../../util/msparse");
 
 module.exports.run = async (client, message) => {
     const heapUsed = Math.floor(process.memoryUsage().heapUsed / 1024 / 1024);
