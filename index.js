@@ -57,7 +57,7 @@ const client = new Client({
     ]
 });
 
-process.stdout.write(`Discord.JS Version: ${version}\nStereo Version: ${require("./package.json").version}\nStarting...\n\n`)
+process.stdout.write(`Discord.JS Version: ${version}\nXeno Version: ${require("./package.json").version}\nStarting...\n\n`)
 
 client.login(token).catch(console.error);
 loadCommands();
