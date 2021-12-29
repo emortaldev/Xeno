@@ -5,7 +5,7 @@
         "@discordjs/opus": "^0.5.0",
         "bufferutil": "^4.0.3",
         "chalk": "^4.1.1",
-        "discord.js-light": "github:timotejroiko/discord.js-light",
+        "discord.js-light": "3.5.11",
         "erlpack": "github:discord/erlpack",
         "tiny-glob": "^0.2.8",
         "utf-8-validate": "^5.0.4",

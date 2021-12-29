@@ -10,7 +10,7 @@ module.exports = {
         const files = await glob("commands/*/*.js");
 
         files.forEach(async (file) => {
-            const command = require(`./${file}`);
+            const command = require(`./../${file}`);
             const splitter = file.split(directorySlash);
 
             commands.set(splitter[2].slice(0, -3), {
@@ -18,7 +18,7 @@ module.exports = {
                 category: splitter[1],
             });
 
-            delete require.cache[require.resolve(`./${file}`)];
+            delete require.cache[require.resolve(`./../${file}`)];
         });
     },
     getCommand: (commandName) => {
