@@ -1,4 +1,7 @@
 {
-    "token": "TOKEN",
-    "prefix": ";"
+    "token": "your bot's token here",
+    "guildId": "your guild id here",
+
+    "poToken": "",
+    "browser": ""
 }
