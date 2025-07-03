@@ -4,9 +4,6 @@ Basic music bot written using discord.js and yt-dlp
 
 Downloads songs fully with yt-dlp to your temp folder before playing to avoid stutter or other issues, in exchange for longer song load times.
 
-If you don't want to go through the setup, you can invite the public bot [here](
-https://discord.com/api/oauth2/authorize?client_id=1133576887705288714&permissions=3145728&scope=bot) but there are no uptime or performance guarantees
-
 ## Self host usage
 
 1. Download [Bun](https://bun.sh/) (or your preferred version of Node)
